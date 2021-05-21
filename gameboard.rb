@@ -49,7 +49,7 @@ class GameBoard
   end
 
   def winner?
-    false
+    row_winner? || column_winner? || diagonal_winner?
   end
 
   def full?
@@ -81,8 +81,35 @@ class GameBoard
   def slot_column(slot)
     (slot - 1) % @size
   end
-  
-  def row_winner?
 
+  def row_winner?
+    @board.each do |row|
+      return true if row.uniq.count == 1 && row.first
+    end
+
+    false
+  end
+
+  def column_winner?
+    [0..(@size - 1)].each_index do |i|
+      return true if (@board.map { |row| row[i] }).uniq.count == 1 && @board[i].first
+    end
+
+    false
+  end
+
+  def diagonal_winner?
+    down = []
+    up = []
+    up_index = @size - 1
+
+    @board.each_index do |i|
+      down << @board[i][i]
+      up << @board[up_index - i][i]
+    end
+
+    return true if (down.uniq.count == 1 && down.first) || (up.uniq.count == 1 && up.first)
+
+    false
   end
 end

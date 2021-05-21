@@ -14,18 +14,21 @@ class TicTacToe
     get_players
     @current_player = @player1
 
-    until @board.winner? || @board.full?
+    until @board.full?
       @board.display_board
       play_next_turn(@current_player)
-    end
 
+      if @board.winner?
+        puts "#{@current_player.marker} wins!"
+        break
+      else
+        switch_player
+      end
+    end
+    
     @board.display_board
-
-    if @board.full?
-      puts 'It was a draw!' if @board.full?
-    else
-      puts "#{@current_player.marker} wins!"
-    end
+    
+    puts 'It was a draw!' if @board.full?
   end
 
   private 
@@ -68,7 +71,6 @@ class TicTacToe
     end
 
     @board.place_marker(current_player.marker, cell)
-    switch_player
   end
 
   def switch_player
