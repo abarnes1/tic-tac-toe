@@ -1,4 +1,5 @@
 require_relative 'human_player'
+require_relative 'computer_player'
 
 class TicTacToe
 
@@ -13,11 +14,22 @@ class TicTacToe
     get_players
     @current_player = @player1
 
+    until @board.winner? || @board.full?
+      @board.display_board
+      play_next_turn(@current_player)
+    end
+
     @board.display_board
+
+    if @board.full?
+      puts 'It was a draw!' if @board.full?
+    else
+      puts "#{@current_player.marker} wins!"
+    end
   end
 
   private 
-  def get_players()
+  def get_players
     player_count = 1
     markers = ["O", "X"]
 
@@ -31,21 +43,35 @@ class TicTacToe
       end
 
       if player_type == "1"
-        puts "Human player was chosen."
+        # puts "Human player was chosen."
         player = HumanPlayer.new(markers.pop)
       elsif player_type == "2"
-        puts "Computer player was chosen."
+        # puts "Computer player was chosen."
         player = 2
       end
 
-      player1 = player if player_count == 1
-      player2 = player if player_count == 2
+      @player1 = player if player_count == 1
+      @player2 = player if player_count == 2
 
       player_count += 1 
     end
+
+    @current_player = @player1
   end
 
-  def next_turn
-    p "starting next turn"
+  def play_next_turn(current_player)
+    cell = 0
+    
+    until @board.slot_valid?(cell)
+      puts "Choose a square for #{current_player.marker}:"
+      cell = gets.chomp.to_i
+    end
+
+    @board.place_marker(current_player.marker, cell)
+    switch_player
+  end
+
+  def switch_player
+    @current_player = (@current_player == @player1) ? @player2 : @player1
   end
 end
