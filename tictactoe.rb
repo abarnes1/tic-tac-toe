@@ -11,7 +11,8 @@ class TicTacToe
   end
 
   def play_game
-    get_players
+    @player1 = get_player('X')
+    @player2 = get_player('O')
     @current_player = @player1
 
     until @board.full?
@@ -25,46 +26,36 @@ class TicTacToe
         switch_player
       end
     end
-    
+
     @board.display_board
-    
+
     puts 'It was a draw!' if @board.full?
   end
 
-  private 
-  def get_players
-    player_count = 1
-    markers = ["O", "X"]
+  private
 
-    while player_count <= 2
-      player_type = String.new
-      player = nil
+  def get_player(marker)
+    player = nil
+    player_type = nil
 
-      until player_type == "1" || player_type == "2" do
-        puts "Choose player #{player_count} for #{markers.last}.  Enter 1 for Human or 2 for Computer."
-        player_type = gets.chomp 
-      end
-
-      if player_type == "1"
-        # puts "Human player was chosen."
-        player = HumanPlayer.new(markers.pop)
-      elsif player_type == "2"
-        # puts "Computer player was chosen."
-        player = 2
-      end
-
-      @player1 = player if player_count == 1
-      @player2 = player if player_count == 2
-
-      player_count += 1 
+    until %w[1 2].include?(player_type)
+      puts "Choose player for #{marker}.  Enter 1 for Human or 2 for Computer."
+      player_type = gets.chomp
     end
 
-    @current_player = @player1
+    case player_type
+    when '1'
+      player = HumanPlayer.new(marker)
+    when '2'
+      player = 2
+    end
+
+    player
   end
 
   def play_next_turn(current_player)
     cell = 0
-    
+
     until @board.slot_valid?(cell)
       puts "Choose a square for #{current_player.marker}:"
       cell = gets.chomp.to_i
@@ -74,6 +65,6 @@ class TicTacToe
   end
 
   def switch_player
-    @current_player = (@current_player == @player1) ? @player2 : @player1
+    @current_player = @current_player == @player1 ? @player2 : @player1
   end
 end

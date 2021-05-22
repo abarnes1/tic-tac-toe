@@ -31,7 +31,7 @@ class GameBoard
         row_separator << '+' unless row_separator.length == display_row.length
       end
 
-      board << "\n #{row_separator} \n" unless row_index == (@size - 1)
+      board << "\n#{row_separator}\n" unless row_index == (@size - 1)
     end
 
     puts board
