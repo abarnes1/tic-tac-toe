@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GameBoard
   def initialize(size = 3)
     @size = size
@@ -17,7 +19,7 @@ class GameBoard
 
       row.each_index do |col_index|
         cell_contents = row[col_index].nil? ? slot.to_s : row[col_index]
-        display_row << add_padding(cell_contents)
+        display_row << add_cell_padding(cell_contents)
         display_row << '|' unless col_index == (@size - 1)
         slot += 1
       end
@@ -57,12 +59,12 @@ class GameBoard
   end
 
   def slot_valid?(slot)
-    slot.positive? && slot <= (@size * @size) && slot_free?(slot)
+    slot.between?(1, @size * @size) && slot_free?(slot)
   end
 
   private
 
-  def add_padding(contents)
+  def add_cell_padding(contents)
     spaces_to_fill = @cell_width - contents.to_s.length
     left_pad = (spaces_to_fill / 2) + (spaces_to_fill % 2)
     right_pad = spaces_to_fill / 2
