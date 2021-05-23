@@ -41,7 +41,7 @@ module BoardPrinter
     @board.size.times do
       grid << contents_array[index]
       grid += last_column?(index) ? "\n" : '|'
-      grid += row_sep if last_column?(index) && !last_row?(index)
+      grid += row_separator if last_column?(index) && !last_row?(index)
       index += 1
     end
 
