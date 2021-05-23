@@ -11,7 +11,6 @@ module BoardPrinter
         cell_format(contents, cell[:color])
       end
 
-    # puts "printing board of size #{@size}x#{@size}"
     puts as_grid(print_values)
   end
 
@@ -39,7 +38,7 @@ module BoardPrinter
     index = 0
 
     @board.size.times do
-      grid << contents_array[index]
+      grid += contents_array[index]
       grid += last_column?(index) ? "\n" : '|'
       grid += row_separator if last_column?(index) && !last_row?(index)
       index += 1
@@ -60,8 +59,8 @@ module BoardPrinter
     separator = ''
 
     @size.times do
-      separator << '-' * max_cell_width
-      separator << '+'
+      separator += '-' * max_cell_width
+      separator += '+'
     end
 
     separator.chop << "\n"

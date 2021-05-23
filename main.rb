@@ -29,12 +29,17 @@ test_board.mark('2', 'X', '31m') if test_board.slot_free?('2')
 test_board.mark('2', 'O', '32m') if test_board.slot_free?('2')
 test_board.mark('3', 'O', '33m') if test_board.slot_free?('3')
 test_board.mark('4', 'O', '33m') if test_board.slot_free?('4')
+test_board.mark(test_board.random_open_slot[:slot], 'X', '31m')
 test_board.print
 
-test_board = ArrayBoard.new(11)
+# p test_board.open_slots
+# puts ''
+# p test_board.marked_slots('X')
+# puts ''
+# p test_board.marked_slots('O')
+# puts ''
+# p test_board.marked_slots
 
-test_board.mark('2', 'X', '31m') if test_board.slot_free?('2')
-test_board.mark('2', 'O', '32m') if test_board.slot_free?('2')
-test_board.mark('3', 'O', '33m') if test_board.slot_free?('3')
-test_board.mark('4', 'O', '33m') if test_board.slot_free?('4')
-test_board.print
+# p test_board.random_open_slot
+# p test_board.random_open_slot
+# p test_board.random_open_slot

@@ -9,7 +9,6 @@ class ArrayBoard
     @size = size
     @board = Array.new(size * size) { Hash.new }
 
-    # p "@size: #{@size} | size: #{size}"
     set_initial_hash_slot
   end
 
@@ -22,6 +21,22 @@ class ArrayBoard
   def slot_free?(slot)
     cell = @board.find { |cell| cell[:slot] == slot}
     cell[:marker].nil?
+  end
+
+  def open_slots
+    @board.select {|cell| cell[:marker].nil?}
+  end
+
+  def marked_slots(marker = nil)
+    if(marker.nil?)
+      @board.select {|cell| !cell[:marker].nil?}
+    else
+      @board.select {|cell| cell[:marker] == marker}
+    end
+  end
+
+  def random_open_slot
+    open_slots[rand(open_slots.length)]
   end
 
   private
