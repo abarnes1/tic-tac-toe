@@ -76,7 +76,7 @@ class TicTacToe
   def play_next_turn(current_player)
     cell = 0
 
-    until @board.slot_valid?(cell) do
+    until @board.slot_valid?(cell)
       print "Choose a square for #{current_player.marker}: "
       cell = gets.chomp.to_i
     end

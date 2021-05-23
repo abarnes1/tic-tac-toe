@@ -1,5 +1,6 @@
 module BoardPrinter
   def max_cell_width
+    # cell width necessary for centered number,  ex: | 1 |, | 10 | | 100 |
     @board.size.to_s.length + 2
   end
 
@@ -7,11 +8,10 @@ module BoardPrinter
     print_values =
       @board.map do |cell|
         contents = cell[:marker].nil? ? cell[:slot] : cell[:marker]
-        # p "contents: #{contents}"
         cell_format(contents, cell[:color])
       end
 
-    puts "printing board of size #{@size}x#{@size}"
+    # puts "printing board of size #{@size}x#{@size}"
     puts as_grid(print_values)
   end
 
@@ -23,7 +23,11 @@ module BoardPrinter
   end
 
   def with_padding(contents)
-    contents
+    spaces_to_fill = max_cell_width - contents.to_s.length
+    left_pad = (spaces_to_fill / 2) + (spaces_to_fill % 2)
+    right_pad = spaces_to_fill / 2
+
+    ' ' * left_pad + contents + ' ' * right_pad
   end
 
   def with_color(contents, color)
@@ -36,10 +40,30 @@ module BoardPrinter
 
     @board.size.times do
       grid << contents_array[index]
-      grid += ((index + 1) % @size).zero? ? "\n" : '|'
+      grid += last_column?(index) ? "\n" : '|'
+      grid += row_sep if last_column?(index) && !last_row?(index)
       index += 1
     end
 
     grid
+  end
+
+  def last_column?(index)
+    ((index + 1) % @size).zero?
+  end
+
+  def last_row?(index)
+    (index / @size) == (@size - 1)
+  end
+
+  def row_separator
+    separator = ''
+
+    @size.times do
+      separator << '-' * max_cell_width
+      separator << '+'
+    end
+
+    separator.chop << "\n"
   end
 end

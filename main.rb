@@ -15,7 +15,23 @@ $stdout.sync = true # allows use of print instead of put to keep prompt and inpu
 #   break unless answer.downcase == 'y'
 # end
 
+test_board = ArrayBoard.new(3)
+
+test_board.mark('2', 'X', '31m') if test_board.slot_free?('2')
+test_board.mark('2', 'O', '32m') if test_board.slot_free?('2')
+test_board.mark('3', 'O', '33m') if test_board.slot_free?('3')
+test_board.mark('4', 'O', '33m') if test_board.slot_free?('4')
+test_board.print
+
 test_board = ArrayBoard.new(4)
+
+test_board.mark('2', 'X', '31m') if test_board.slot_free?('2')
+test_board.mark('2', 'O', '32m') if test_board.slot_free?('2')
+test_board.mark('3', 'O', '33m') if test_board.slot_free?('3')
+test_board.mark('4', 'O', '33m') if test_board.slot_free?('4')
+test_board.print
+
+test_board = ArrayBoard.new(11)
 
 test_board.mark('2', 'X', '31m') if test_board.slot_free?('2')
 test_board.mark('2', 'O', '32m') if test_board.slot_free?('2')
