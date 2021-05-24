@@ -28,7 +28,7 @@ class TicTacToe
 
   private
 
-  def get_player(marker, color_code)
+  def get_player(marker, color_code = nil)
     player = nil
     player_type = nil
 
@@ -51,7 +51,7 @@ class TicTacToe
   end
 
   def setup_game
-    @player1 = get_player('X', '31m')
+    @player1 = get_player('X')
     @player2 = get_player('O', '32m')
     @current_player = @player1
 

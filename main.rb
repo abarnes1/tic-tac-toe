@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'tictactoe'
-require_relative 'gameboard'
 require_relative 'array_board'
 
 $stdout.sync = true # allows use of print instead of put to keep prompt and input on same line
