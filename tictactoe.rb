@@ -19,8 +19,6 @@ class TicTacToe
       @board.print
       play_next_turn(@current_player)
 
-      p "winner? #{@board.winner?(@current_player.marker)}"
-
       if @board.winner?(@current_player.marker)
         @winner = @current_player
         break
@@ -39,18 +37,17 @@ class TicTacToe
     player_type = nil
 
     until %w[1 2].include?(player_type)
-      # puts "Choose player for #{marker}."
-      # print 'Enter 1 for Human or 2 for Computer: '
-      # player_type = gets.chomp
-      player_type = '1'
-      # puts ''
+      puts "Choose player for #{marker}."
+      print 'Enter 1 for Human or 2 for Computer: '
+      player_type = gets.chomp
+      puts ''
     end
 
     case player_type
     when '1'
       player = HumanPlayer.new(marker, color_code)
     when '2'
-      player = 2
+      player = ComputerPlayer.new(marker, color_code)
     end
 
     player
@@ -58,7 +55,7 @@ class TicTacToe
 
   def setup_game
     @player1 = get_player('X', '31m')
-    @player2 = get_player('O', '32m')
+    @player2 = get_player('O', '36m')
     @current_player = @player1
     @winner = nil
 
@@ -83,9 +80,14 @@ class TicTacToe
   def play_next_turn(current_player)
     slot = 0
 
-    until @board.slot_free?(slot)
-      print "Choose a square for #{current_player.marker}: "
-      slot = gets.chomp.to_i
+    if current_player.instance_of?(HumanPlayer)
+      until @board.slot_free?(slot)
+        print "Choose a square for #{current_player.marker}: "
+        slot = gets.chomp.to_i
+      end
+    elsif current_player.instance_of?(ComputerPlayer)
+      slot = @board.random_open_slot
+      puts "Computer (#{current_player.marker}) chooses slot ##{slot}"
     end
 
     @board.mark(current_player.marker, slot, current_player.color_code)
