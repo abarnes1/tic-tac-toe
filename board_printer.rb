@@ -26,7 +26,7 @@ module BoardPrinter
     left_pad = (spaces_to_fill / 2) + (spaces_to_fill % 2)
     right_pad = spaces_to_fill / 2
 
-    ' ' * left_pad + contents + ' ' * right_pad
+    ' ' * left_pad + contents.to_s + ' ' * right_pad
   end
 
   def with_color(contents, color)
