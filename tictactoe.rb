@@ -9,6 +9,7 @@ class TicTacToe
     @player1 = nil
     @player2 = nil
     @current_player = nil
+    @winner = nil
   end
 
   def play_game
@@ -18,7 +19,12 @@ class TicTacToe
       @board.print
       play_next_turn(@current_player)
 
-      break if @board.winner?(@current_player.marker)
+      p "winner? #{@board.winner?(@current_player.marker)}"
+
+      if @board.winner?(@current_player.marker)
+        @winner = @current_player
+        break
+      end
 
       switch_player
     end
@@ -51,9 +57,10 @@ class TicTacToe
   end
 
   def setup_game
-    @player1 = get_player('X')
+    @player1 = get_player('X', '31m')
     @player2 = get_player('O', '32m')
     @current_player = @player1
+    @winner = nil
 
     @board = ArrayBoard.new(board_size)
   end
@@ -88,7 +95,7 @@ class TicTacToe
   def end_game
     @board.print
 
-    if @board.full?
+    if @winner.nil?
       puts 'Draw :('
     else
       puts "#{@current_player.marker} wins!!!"
