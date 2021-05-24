@@ -15,10 +15,10 @@ class TicTacToe
     setup_game
 
     until @board.full?
-      @board.display_board
+      @board.print
       play_next_turn(@current_player)
 
-      break if @board.winner?
+      break if @board.winner?(@current_player.marker)
 
       switch_player
     end
@@ -28,7 +28,7 @@ class TicTacToe
 
   private
 
-  def get_player(marker)
+  def get_player(marker, color_code)
     player = nil
     player_type = nil
 
@@ -42,7 +42,7 @@ class TicTacToe
 
     case player_type
     when '1'
-      player = HumanPlayer.new(marker)
+      player = HumanPlayer.new(marker, color_code)
     when '2'
       player = 2
     end
@@ -51,11 +51,11 @@ class TicTacToe
   end
 
   def setup_game
-    @player1 = get_player('X')
-    @player2 = get_player('O')
+    @player1 = get_player('X', '31m')
+    @player2 = get_player('O', '32m')
     @current_player = @player1
 
-    @board = GameBoard.new(board_size)
+    @board = ArrayBoard.new(board_size)
   end
 
   def board_size
@@ -74,19 +74,19 @@ class TicTacToe
   end
 
   def play_next_turn(current_player)
-    cell = 0
+    slot = 0
 
-    until @board.slot_valid?(cell)
+    until @board.slot_free?(slot)
       print "Choose a square for #{current_player.marker}: "
-      cell = gets.chomp.to_i
+      slot = gets.chomp.to_i
     end
 
-    @board.place_marker(current_player.marker, cell)
+    @board.mark(current_player.marker, slot, current_player.color_code)
     puts ''
   end
 
   def end_game
-    @board.display_board
+    @board.print
 
     if @board.full?
       puts 'Draw :('

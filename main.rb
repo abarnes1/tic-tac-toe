@@ -6,23 +6,27 @@ require_relative 'array_board'
 
 $stdout.sync = true # allows use of print instead of put to keep prompt and input on same line
 
-# game = TicTacToe.new
+game = TicTacToe.new
 
-# loop do
-#   game.play_game
-#   print 'Play again? Enter Y for yes or any other key for no: '
-#   answer = gets.chomp
-#   break unless answer.downcase == 'y'
-# end
+loop do
+  game.play_game
+  print 'Play again? Enter Y for yes or any other key for no: '
+  answer = gets.chomp
+  break unless answer.downcase == 'y'
+end
 
-test_board = ArrayBoard.new(3)
+# test_board = ArrayBoard.new(3)
 
-test_board.mark(1, 'X', '31m') if test_board.slot_free?(1)
-test_board.mark(2, 'X', '31m') if test_board.slot_free?(2)
-test_board.mark(3, 'X', '31m') if test_board.slot_free?(3)
-test_board.mark(4, 'O', '33m') if test_board.slot_free?(4)
-test_board.print
+# test_board.mark(1, 'X', '31m') if test_board.slot_free?(1)
+# test_board.mark(2, 'X', '31m') if test_board.slot_free?(2)
+# test_board.mark(3, 'X', '31m') if test_board.slot_free?(3)
+# test_board.mark(4, 'O', '33m') if test_board.slot_free?(4)
+# test_board.print
 
+# # p test_board.open_slots
+# # p test_board.full?
+# p test_board.winner?('X')
+# p test_board.winner?('O')
 # # test_board = ArrayBoard.new(4)
 
 # # test_board.mark(2, 'X', '31m') if test_board.slot_free?(2)
@@ -50,4 +54,4 @@ test_board.print
 # # p test_board.marked_slots
 # # puts ''
 
-p test_board.win_combos
+# p test_board.win_combos

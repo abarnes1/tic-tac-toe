@@ -13,19 +13,32 @@ class ArrayBoard
     @win_combos = generate_win_combos
   end
 
-  def mark(slot, marker, color = nil)
-    cell = @board.find { |cell| cell[:slot] == slot}
+  def mark(marker, slot, color = nil)
+    cell = @board.find { |cell| cell[:slot] == slot }
     cell[:color] = color unless color.nil?
     cell[:marker] = marker
   end
 
   def slot_free?(slot)
-    cell = @board.find { |cell| cell[:slot] == slot}
-    cell[:marker].nil?
+    cell = @board.find { |cell| cell[:slot] == slot }
+    cell.nil? ? false : cell[:marker].nil?
   end
 
   def open_slots
     @board.map { |cell| cell[:slot] if cell[:marker].nil? }.compact
+  end
+
+  def full?
+    open_slots.length == 0
+  end
+
+  def winner?(marker)
+    marked_slots = marked_slots(marker)
+    @win_combos.each do |combo|
+      return true if (combo - marked_slots).length.zero?
+    end
+
+    false
   end
 
   def marked_slots(marker = nil)
