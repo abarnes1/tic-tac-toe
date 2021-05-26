@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
+# prints the tic-tac-toe gameboard to the console
 module GameboardPrinter
   def max_cell_width
-    # cell width necessary for centered number,  ex: | 1 |, | 10 | | 100 |
+    # cell width necessary for centered number,  ex: | 1 |, | 10 |, | 100 |
     @board.size.to_s.length + 2
   end
 

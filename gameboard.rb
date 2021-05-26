@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'gameboard_printer'
 
+# Used to contain and control the tic-tac-toe grid itself via
+# public methods that prevent the game from being tampered with
 class Gameboard
   include GameboardPrinter
 
@@ -14,18 +18,14 @@ class Gameboard
   end
 
   def mark(marker, slot, color = nil)
-    cell = @board.find { |cell| cell[:slot] == slot }
-    cell[:color] = color unless color.nil?
-    cell[:marker] = marker
+    marked = @board.find { |cell| cell[:slot] == slot }
+    marked[:color] = color unless color.nil?
+    marked[:marker] = marker
   end
 
   def slot_free?(slot)
-    cell = @board.find { |cell| cell[:slot] == slot }
-    cell.nil? ? false : cell[:marker].nil?
-  end
-
-  def current_slots
-    @board.map?
+    free = @board.find { |cell| cell[:slot] == slot }
+    free.nil? ? false : free[:marker].nil?
   end
 
   def open_slots
@@ -110,6 +110,6 @@ class Gameboard
   end
 
   def initialize_slot_values
-    @board.each_index { |i| @board[i][:slot] = (i + 1)}
+    @board.each_index { |i| @board[i][:slot] = (i + 1) }
   end
 end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Parent class for all player types
 class Player
   attr_reader :marker, :color_code
 

@@ -3,6 +3,7 @@
 require_relative 'human_player'
 require_relative 'computer_player'
 
+# tic tac toe game logic
 class TicTacToe
   attr_reader :result, :game_count
 
@@ -113,9 +114,5 @@ class TicTacToe
 
   def switch_player
     @current_player = @current_player == @player1 ? @player2 : @player1
-  end
-
-  def minimax(board, depth, maximizing)
-
   end
 end
