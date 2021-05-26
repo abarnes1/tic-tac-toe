@@ -4,12 +4,16 @@ require_relative 'human_player'
 require_relative 'computer_player'
 
 class TicTacToe
+  attr_reader :result, :game_count
+
   def initialize
     @board = nil
     @player1 = nil
     @player2 = nil
     @current_player = nil
     @winner = nil
+    @game_count = 0
+    @result = nil
   end
 
   def play_game
@@ -86,7 +90,7 @@ class TicTacToe
         slot = gets.chomp.to_i
       end
     elsif current_player.instance_of?(ComputerPlayer)
-      slot = @board.random_open_slot
+      slot = @board.open_slots.sample
       puts "Computer (#{current_player.marker}) chooses slot ##{slot}"
     end
 
@@ -95,16 +99,23 @@ class TicTacToe
   end
 
   def end_game
+    @game_count += 1
     @board.print
 
     if @winner.nil?
+      @result = 'draw'
       puts 'Draw :('
     else
+      @result = 'win'
       puts "#{@current_player.marker} wins!!!"
     end
   end
 
   def switch_player
     @current_player = @current_player == @player1 ? @player2 : @player1
+  end
+
+  def minimax(board, depth, maximizing)
+
   end
 end

@@ -1,4 +1,5 @@
 require_relative 'board_printer'
+require_relative 'minimax'
 
 class ArrayBoard
   include BoardPrinter
@@ -24,12 +25,16 @@ class ArrayBoard
     cell.nil? ? false : cell[:marker].nil?
   end
 
+  def current_slots
+    @board.map?
+  end
+
   def open_slots
     @board.map { |cell| cell[:slot] if cell[:marker].nil? }.compact
   end
 
   def full?
-    open_slots.length == 0
+    open_slots.length.zero?
   end
 
   def winner?(marker)
@@ -42,15 +47,11 @@ class ArrayBoard
   end
 
   def marked_slots(marker = nil)
-    if(marker.nil?)
+    if marker.nil?
       @board.map { |cell| cell[:slot] unless cell[:marker].nil? }.compact
     else
       @board.map { |cell| cell[:slot] if cell[:marker] == marker }.compact
     end
-  end
-
-  def random_open_slot
-    open_slots[rand(open_slots.length)]
   end
 
   def win_combos
@@ -62,7 +63,7 @@ class ArrayBoard
   def horizontal_winners
     winning_sets = Array.new(@size) { Array.new }
     slot_array = @board.map { |cell| cell[:slot] }
-     
+
     index = 0
     @size.times do
       winning_sets[index] = slot_array.slice!(0, @size)
@@ -84,10 +85,10 @@ class ArrayBoard
 
   def diagonal_winners
     down = []
-    down_index = 0
-
     up = []
+
     up_index = @size * (@size - 1)
+    down_index = 0
 
     @size.times do
       down << @board[down_index][:slot]
