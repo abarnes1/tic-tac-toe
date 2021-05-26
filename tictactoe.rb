@@ -63,7 +63,7 @@ class TicTacToe
     @current_player = @player1
     @winner = nil
 
-    @board = ArrayBoard.new(board_size)
+    @board = Gameboard.new(board_size)
   end
 
   def board_size

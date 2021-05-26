@@ -1,7 +1,7 @@
-require_relative 'board_printer'
+require_relative 'gameboard_printer'
 
-class ArrayBoard
-  include BoardPrinter
+class Gameboard
+  include GameboardPrinter
 
   attr_reader :size
 
