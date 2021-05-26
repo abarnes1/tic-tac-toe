@@ -1,5 +1,4 @@
 require_relative 'board_printer'
-require_relative 'minimax'
 
 class ArrayBoard
   include BoardPrinter

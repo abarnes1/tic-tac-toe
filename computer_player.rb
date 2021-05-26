@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-class ComputerPlayer
-  attr_reader :marker, :color_code
+require_relative 'player'
 
+class ComputerPlayer < Player
   def initialize(marker, color_code = nil)
-    @marker = marker
-    @color_code = color_code
+    super(marker, color_code)
   end
 end
