@@ -3,7 +3,7 @@
 require_relative 'tictactoe'
 require_relative 'gameboard'
 
-$stdout.sync = true # allows use of print instead of put to keep prompt and input on same line
+$stdout.sync = true # allows use of print keep prompt and input on same line
 
 game = TicTacToe.new
 

@@ -14,7 +14,6 @@ class TicTacToe
     @current_player = nil
     @winner = nil
     @game_count = 0
-    @result = nil
   end
 
   def play_game
@@ -103,13 +102,7 @@ class TicTacToe
     @game_count += 1
     @board.print
 
-    if @winner.nil?
-      @result = 'draw'
-      puts 'Draw :('
-    else
-      @result = 'win'
-      puts "#{@current_player.marker} wins!!!"
-    end
+    puts @winner.nil? ? 'Draw :(' : "#{@current_player.marker} wins!!!"
   end
 
   def switch_player

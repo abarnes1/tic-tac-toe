@@ -18,14 +18,14 @@ class Gameboard
   end
 
   def mark(marker, slot, color = nil)
-    marked = @board.find { |cell| cell[:slot] == slot }
-    marked[:color] = color unless color.nil?
-    marked[:marker] = marker
+    to_mark = @board.find { |cell| cell[:slot] == slot }
+    to_mark[:color] = color unless color.nil?
+    to_mark[:marker] = marker
   end
 
   def slot_free?(slot)
-    free = @board.find { |cell| cell[:slot] == slot }
-    free.nil? ? false : free[:marker].nil?
+    to_check = @board.find { |cell| cell[:slot] == slot }
+    to_check.nil? ? false : to_check[:marker].nil?
   end
 
   def open_slots
@@ -61,11 +61,11 @@ class Gameboard
 
   def horizontal_winners
     winning_sets = Array.new(@size) { Array.new }
-    slot_array = @board.map { |cell| cell[:slot] }
+    all_slots = @board.map { |cell| cell[:slot] }
 
     index = 0
     @size.times do
-      winning_sets[index] = slot_array.slice!(0, @size)
+      winning_sets[index] = all_slots.slice!(0, @size)
       index += 1
     end
 
