@@ -2,7 +2,7 @@ This is the tic-tac-toe project from The Odin Project's Ruby curriculum.  It is 
 
 A big feature with this tic-tac-toe game is that it can be played at any size.  The computer can only choose a random remaining square so you may have more of a challenge playing another human.  It is, however, kind of funny to have two computer players face off in games so large that they have no hope of winning.
 
-Key thing I feel I learned:
+Key things I learned:
  1. Usage of enumerable methods - They are used a TON in this project.
  2. Public vs. private functions - Where and why functions should be in each category
  3. Class design - Although subjective, I think what I came up with at least makes sense.
