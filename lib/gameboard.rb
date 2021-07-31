@@ -14,7 +14,7 @@ class Gameboard
   end
 
   private
-  
+
   def cell_to_index(cell)
     cell - 1
   end
