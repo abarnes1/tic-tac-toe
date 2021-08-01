@@ -20,6 +20,10 @@ class Gameboard
     @board[index].nil?
   end
 
+  def full?
+    @board.all?
+  end
+
   private
 
   def cell_to_index(cell)
