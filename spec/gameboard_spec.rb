@@ -142,4 +142,46 @@ describe Gameboard do
       end
     end
   end
+
+  describe '#marked_spaces' do
+    subject(:marked_game) { described_class.new(3) }
+
+    context 'when no spaces marked' do
+      it 'returns empty array with specified marker' do
+        expect(marked_game.marked_spaces('X')).to be_empty
+      end
+
+      it 'returns empty array with no specified marker' do
+        expect(marked_game.marked_spaces).to be_empty
+      end
+    end
+
+    context 'when spaces 1-2 marked X and spaces 3-5 marked O' do
+      before do
+        marked_game.mark(1, 'X')
+        marked_game.mark(2, 'X')
+        marked_game.mark(3, 'O')
+        marked_game.mark(4, 'O')
+        marked_game.mark(5, 'O')
+      end
+
+      it 'returns 1 and 2 for X' do
+        expected_spaces = [1, 2]
+        actual_spaces = marked_game.marked_spaces('X')
+        expect(actual_spaces).to eql(expected_spaces)
+      end
+
+      it 'returns 3, 4, and 5 for O' do
+        expected_spaces = [3, 4, 5]
+        actual_spaces = marked_game.marked_spaces('O')
+        expect(actual_spaces).to eql(expected_spaces)
+      end
+
+      it 'returns 1-5 with no specified marker' do
+        expected_spaces = [1, 2, 3, 4, 5]
+        actual_spaces = marked_game.marked_spaces
+        expect(actual_spaces).to eql(expected_spaces)
+      end
+    end
+  end
 end

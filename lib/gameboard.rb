@@ -24,6 +24,14 @@ class Gameboard
     @board.all?
   end
 
+  def marked_spaces(marker = nil)
+    if marker.nil?
+      @board.map.with_index { |space, index| index_to_cell(index) unless space.nil? }.compact
+    else
+      @board.map.with_index { |space, index| index_to_cell(index) if space == marker }.compact
+    end
+  end
+
   private
 
   def cell_to_index(cell)
