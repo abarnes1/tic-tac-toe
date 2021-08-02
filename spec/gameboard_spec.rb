@@ -184,4 +184,57 @@ describe Gameboard do
       end
     end
   end
+
+  describe '#win_combos' do
+    context 'when game is 3x3' do
+      subject(:nine_space_game) { described_class.new(3) }
+      let(:combos) { nine_space_game.win_combos }
+
+      xit 'has 8 winning combinations' do
+        expect(combos.size).to eq(8)
+      end
+
+      context 'when win is horizontal' do
+        it 'has a [1, 2, 3] win' do
+          expect(combos).to include([1, 2, 3])
+        end
+
+        it 'has a [4, 5, 6] win' do
+          expect(combos).to include([4, 5, 6])
+        end
+
+        it 'has a [7, 8, 9] win' do
+          expect(combos).to include([7, 8, 9])
+        end
+      end
+
+      context 'when win is vertical' do
+        it 'has a [1, 4, 7] win' do
+          expect(combos).to include([1, 4, 7])
+        end
+  
+        it 'has a [2, 5, 8] win' do
+          expect(combos).to include([2, 5, 8])
+        end
+  
+        it 'has a [3, 6, 9] win' do
+          expect(combos).to include([3, 6, 9])
+        end
+      end
+
+      context 'when win is diagonal' do
+        xit 'has a [1, 5, 9] win' do
+
+        end
+  
+        xit 'has a [7, 5, 3] win' do
+  
+        end
+      end
+    end
+
+    context 'when game is 10x10' do
+      subject(:hundred_space_game) { describe_class.new(10) }
+    end
+  end
 end
