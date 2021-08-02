@@ -147,12 +147,16 @@ describe Gameboard do
     subject(:marked_game) { described_class.new(3) }
 
     context 'when no spaces marked' do
-      it 'returns empty array with specified marker' do
-        expect(marked_game.marked_spaces('X')).to be_empty
+      context 'when passed a specific marker' do
+        it 'returns empty array' do
+          expect(marked_game.marked_spaces('X')).to be_empty
+        end
       end
 
-      it 'returns empty array with no specified marker' do
-        expect(marked_game.marked_spaces).to be_empty
+      context 'when passed no specific marker' do
+        it 'returns empty array' do
+          expect(marked_game.marked_spaces).to be_empty
+        end
       end
     end
 
@@ -212,11 +216,11 @@ describe Gameboard do
         it 'has a [1, 4, 7] win' do
           expect(combos).to include([1, 4, 7])
         end
-  
+
         it 'has a [2, 5, 8] win' do
           expect(combos).to include([2, 5, 8])
         end
-  
+
         it 'has a [3, 6, 9] win' do
           expect(combos).to include([3, 6, 9])
         end
@@ -224,17 +228,22 @@ describe Gameboard do
 
       context 'when win is diagonal' do
         xit 'has a [1, 5, 9] win' do
-
+          expect(combos).to include([1, 5, 9])
         end
-  
+
         xit 'has a [7, 5, 3] win' do
-  
+          expect(combos).to include([7, 5, 3])
         end
       end
     end
 
     context 'when game is 10x10' do
       subject(:hundred_space_game) { describe_class.new(10) }
+      let(:combos) { hundred_space_game.win_combos }
+
+      xit 'has 22 winning combinations' do
+        expect(combos.size).to eq(22)
+      end
     end
   end
 end

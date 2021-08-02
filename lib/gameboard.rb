@@ -5,7 +5,6 @@ class Gameboard
   def initialize(size)
     @size = size
     @board = Array.new(size * size)
-    @win_combos = nil
   end
 
   def open_spaces
