@@ -1,6 +1,54 @@
 require_relative '../lib/gameboard'
 
 describe Gameboard do
+  describe '#mark' do
+    context 'when game is 3x3' do
+      subject(:marked_game) { described_class.new(3) }
+
+      context 'when space 1 is marked' do
+        before do
+          marked_game.mark(1, 'X')
+        end
+
+        it 'has 8 open spaces' do
+          open_spaces = marked_game.open_spaces
+
+          expect(open_spaces.count).to eq(8)
+        end
+
+        it 'open spaces does not include space 1' do
+          open_spaces = marked_game.open_spaces
+
+          expect(open_spaces).not_to include(1)
+        end
+
+        it 'space 1 is not free' do
+          expect(marked_game.space_free?(1)).to eq(false)
+        end
+      end
+    end
+  end
+
+  describe '#space_free?' do
+    subject(:space_free_game) { described_class.new(3) }
+
+    context 'when space 1 is not marked' do
+      it 'is free' do
+        expect(space_free_game.space_free?(1)).to be(true)
+      end
+    end
+
+    context 'when space 1 is marked' do
+      before do
+        space_free_game.mark(1, 'X')
+      end
+
+      it 'is not free' do
+        expect(space_free_game.space_free?(1)).not_to be(true)
+      end
+    end
+  end
+
   describe '#open_spaces' do
     context 'when game is 3x3' do
       subject(:nine_space_game) { described_class.new(3) }
@@ -11,25 +59,10 @@ describe Gameboard do
           expect(open_spaces.count).to eq(9)
         end
       end
-    end
-
-    context 'when game is 10x10' do
-      subject(:hundred_space_game) { described_class.new(10) }
-
-      context 'when no spaces are marked' do
-        it 'has 100 open spaces' do
-          open_spaces = hundred_space_game.open_spaces
-          expect(open_spaces.count).to eq(100)
-        end
-      end
-    end
-  end
-
-  describe '#mark' do
-    context 'when game is 3x3' do
-      subject(:marked_game) { described_class.new(3) }
 
       context 'when space 1 is marked' do
+        subject(:marked_game) { described_class.new(3) }
+
         before do
           marked_game.mark(1, 'X')
         end
@@ -55,6 +88,8 @@ describe Gameboard do
       end
 
       context 'when spaces 1, 5, and 9 are marked' do
+        subject(:marked_game) { described_class.new(3) }
+
         before do
           marked_game.mark(1, 'X')
           marked_game.mark(5, 'X')
@@ -81,63 +116,14 @@ describe Gameboard do
         end
       end
     end
-  end
 
-  describe '#space_free?' do
-    subject(:space_free_game) { described_class.new(3) }
-
-    context 'when space 1 is not marked' do
-      it 'is free' do
-        expect(space_free_game.space_free?(1)).to be(true)
-      end
-    end
-
-    context 'when space 1 is marked' do
-      before do
-        space_free_game.mark(1, 'X')
-      end
-
-      it 'is not free' do
-        expect(space_free_game.space_free?(1)).not_to be(true)
-      end
-    end
-  end
-
-  describe '#full?' do
-    context 'when game is 3x3' do
-      subject(:full_test_game) { described_class.new(3) }
+    context 'when game is 10x10' do
+      subject(:hundred_space_game) { described_class.new(10) }
 
       context 'when no spaces are marked' do
-        before do
-          full_test_game.mark(1, 'X')
-        end
-
-        it 'is not full' do
-          expect(full_test_game).not_to be_full
-        end
-      end
-
-      context 'when 5 spaces are marked' do
-        before do
-          5.times do |index|
-            full_test_game.mark(index + 1, 'X')
-          end
-        end
-
-        it 'is not full' do
-          expect(full_test_game).not_to be_full
-        end
-      end
-
-      context 'when 9 spaces are marked' do
-        before do
-          9.times do |index|
-            full_test_game.mark(index, 'X')
-          end
-        end
-
-        it 'is full' do
-          expect(full_test_game).to be_full
+        it 'has 100 open spaces' do
+          open_spaces = hundred_space_game.open_spaces
+          expect(open_spaces.count).to eq(100)
         end
       end
     end
@@ -189,12 +175,52 @@ describe Gameboard do
     end
   end
 
+  describe '#full?' do
+    context 'when game is 3x3' do
+      subject(:full_test_game) { described_class.new(3) }
+
+      context 'when no spaces are marked' do
+        before do
+          full_test_game.mark(1, 'X')
+        end
+
+        it 'is not full' do
+          expect(full_test_game).not_to be_full
+        end
+      end
+
+      context 'when 5 spaces are marked' do
+        before do
+          5.times do |index|
+            full_test_game.mark(index + 1, 'X')
+          end
+        end
+
+        it 'is not full' do
+          expect(full_test_game).not_to be_full
+        end
+      end
+
+      context 'when 9 spaces are marked' do
+        before do
+          9.times do |index|
+            full_test_game.mark(index, 'X')
+          end
+        end
+
+        it 'is full' do
+          expect(full_test_game).to be_full
+        end
+      end
+    end
+  end
+
   describe '#win_combos' do
     context 'when game is 3x3' do
       subject(:nine_space_game) { described_class.new(3) }
       let(:combos) { nine_space_game.win_combos }
 
-      xit 'has 8 winning combinations' do
+      it 'has 8 winning combinations' do
         expect(combos.size).to eq(8)
       end
 
@@ -227,21 +253,21 @@ describe Gameboard do
       end
 
       context 'when win is diagonal' do
-        xit 'has a [1, 5, 9] win' do
+        it 'has a [1, 5, 9] win' do
           expect(combos).to include([1, 5, 9])
         end
 
-        xit 'has a [7, 5, 3] win' do
+        it 'has a [7, 5, 3] win' do
           expect(combos).to include([7, 5, 3])
         end
       end
     end
 
     context 'when game is 10x10' do
-      subject(:hundred_space_game) { describe_class.new(10) }
+      subject(:hundred_space_game) { described_class.new(10) }
       let(:combos) { hundred_space_game.win_combos }
 
-      xit 'has 22 winning combinations' do
+      it 'has 22 winning combinations' do
         expect(combos.size).to eq(22)
       end
     end

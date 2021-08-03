@@ -21,6 +21,15 @@ class Gameboard
     @board[index].nil?
   end
 
+  def winner?(marker)
+    marked_slots = marked_spaces(marker)
+    @win_combos.each do |combo|
+      return true if (combo - marked_slots).length.zero?
+    end
+
+    false
+  end
+
   def full?
     @board.all?
   end
@@ -70,30 +79,37 @@ class Gameboard
     winning_sets
   end
 
-  # def diagonal_winners
-  #   down = []
-  #   up = []
+  def top_left_to_bottom_right_winner
+    spaces = []
 
-  #   up_index = @size * (@size - 1)
-  #   down_index = 0
+    top_left_index = 0
 
-  #   @size.times do
-  #     down << @board[down_index][:slot]
-  #     down_index += @size + 1
+    @size.times do
+      spaces << index_to_cell(top_left_index)
+      top_left_index += @size + 1
+    end
 
-  #     up << @board[up_index][:slot]
-  #     up_index += (1 - @size)
-  #   end
+    [spaces]
+  end
 
-  #   [down, up]
-  # end
+  def bottom_left_to_top_right_winner
+    spaces = []
+
+    bottom_left_index = @size * (@size - 1)
+
+    @size.times do
+      spaces << index_to_cell(bottom_left_index)
+      bottom_left_index += (1 - @size)
+    end
+
+    [spaces]
+  end
 
   def generate_win_combos
     all_combos = []
     all_combos += horizontal_winners
     all_combos += vertical_winners
-    # all_combos += diagonal_winners
-
-    all_combos
+    all_combos += top_left_to_bottom_right_winner
+    all_combos += bottom_left_to_top_right_winner
   end
 end
