@@ -110,6 +110,6 @@ class Gameboard
     all_combos += horizontal_winners
     all_combos += vertical_winners
     all_combos += top_left_to_bottom_right_winner
-    all_combos += bottom_left_to_top_right_winner
+    all_combos + bottom_left_to_top_right_winner
   end
 end
