@@ -48,8 +48,6 @@ class TicTacToe
     @current_player = @current_player == @player1 ? @player2 : @player1
   end
 
-  private
-
   def ask_player_type
     player_type = nil
 
@@ -63,9 +61,10 @@ class TicTacToe
     player_type
   end
 
+  private
   def setup_game
-    @player1 = get_player('X', '31m')
-    @player2 = get_player('O', '36m')
+    @player1 = create_player('X', '31m')
+    @player2 = create_player('O', '36m')
     @current_player = @player1
     @winner = nil
 
