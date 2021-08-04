@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative 'console_printer'
+
 # Contains internal state of tic-tac-toe grid and answers questions about the grid's state
 class Gameboard
+  include ConsolePrinter
+
   def initialize(size)
     @size = size
     @board = Array.new(size * size)
@@ -23,7 +27,7 @@ class Gameboard
 
   def winner?(marker)
     marked_slots = marked_spaces(marker)
-    @win_combos.each do |combo|
+    win_combos.each do |combo|
       return true if (combo - marked_slots).length.zero?
     end
 
