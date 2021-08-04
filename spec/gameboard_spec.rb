@@ -272,4 +272,26 @@ describe Gameboard do
       end
     end
   end
+
+  describe '#winner?' do
+    context('when game is 3x3') do
+      subject(:winning_board) { described_class.new(3) }
+
+      context 'when spaces 1-3 are marked with X' do
+        before do
+          winning_board.mark(1, 'X')
+          winning_board.mark(2, 'X')
+          winning_board.mark(3, 'X')
+        end
+
+        it 'has X as winner' do
+          expect(winning_board.winner?('X')).to eq(true)
+        end
+
+        it 'does not have O as winner' do
+          expect(winning_board.winner?('O')).to eq(false)
+        end
+      end
+    end
+  end
 end
