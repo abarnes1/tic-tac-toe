@@ -5,7 +5,7 @@ require_relative 'computer_player'
 
 # tic tac toe game logic
 class TicTacToe
-  attr_reader :result, :game_count
+  attr_reader :result, :current_player
 
   def initialize
     @board = nil
@@ -13,7 +13,6 @@ class TicTacToe
     @player2 = nil
     @current_player = nil
     @winner = nil
-    @game_count = 0
   end
 
   def play_game
@@ -34,10 +33,24 @@ class TicTacToe
     end_game
   end
 
+  def create_player(marker, color_code = nil)
+    player_type = ask_player_type
+
+    case player_type
+    when '1'
+      HumanPlayer.new(marker, color_code)
+    when '2'
+      ComputerPlayer.new(marker, color_code)
+    end
+  end
+
+  def switch_player
+    @current_player = @current_player == @player1 ? @player2 : @player1
+  end
+
   private
 
-  def get_player(marker, color_code = nil)
-    player = nil
+  def ask_player_type
     player_type = nil
 
     until %w[1 2].include?(player_type)
@@ -47,14 +60,7 @@ class TicTacToe
       puts ''
     end
 
-    case player_type
-    when '1'
-      player = HumanPlayer.new(marker, color_code)
-    when '2'
-      player = ComputerPlayer.new(marker, color_code)
-    end
-
-    player
+    player_type
   end
 
   def setup_game
@@ -78,6 +84,7 @@ class TicTacToe
     end
 
     puts ''
+
     size
   end
 
@@ -99,7 +106,6 @@ class TicTacToe
   end
 
   def end_game
-    @game_count += 1
     @board.print
 
     puts @winner.nil? ? 'Draw :(' : "#{@current_player.marker} wins!!!"
