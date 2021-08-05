@@ -77,8 +77,6 @@ class TicTacToe
     size
   end
 
-  private
-  
   def setup_game
     @player1 = create_player('X', '31m')
     @player2 = create_player('O', '36m')
@@ -88,7 +86,7 @@ class TicTacToe
     @board = Gameboard.new(board_size)
   end
 
-
+  private
 
   def play_next_turn(current_player)
     slot = 0
@@ -111,9 +109,5 @@ class TicTacToe
     @board.print
 
     puts @winner.nil? ? 'Draw :(' : "#{@current_player.marker} wins!!!"
-  end
-
-  def switch_player
-    @current_player = @current_player == @player1 ? @player2 : @player1
   end
 end

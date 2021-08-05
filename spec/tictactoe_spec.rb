@@ -1,4 +1,5 @@
 require_relative '../lib/tictactoe'
+require_relative '../lib/gameboard' # uh oh... bad class design?
 
 describe TicTacToe do
   describe '#ask_player_type' do
@@ -110,7 +111,15 @@ describe TicTacToe do
 
     context 'when input is invalid' do
       context 'when input out of range' do
-        xit 'continues the input loop when input is 2' do
+        before do
+          invalid_input = '2'
+          valid_input = '3'
+          allow(board_size_game).to receive(:gets).and_return(invalid_input, valid_input)
+        end
+
+        it 'continues the input loop when input is 2' do
+          expect(board_size_game).to receive(:print).twice
+          board_size_game.board_size
         end
       end
     end
@@ -119,8 +128,6 @@ describe TicTacToe do
       before do
         input = ''
         allow(board_size_game).to receive(:gets).and_return(input)
-        # allow(board_size_game).to receive(:puts)
-        # allow(board_size_game).to receive(:print)
       end
 
       it 'returns default value of 3' do
@@ -157,5 +164,40 @@ describe TicTacToe do
         expect(player.class).to eq(ComputerPlayer)
       end
     end
+  end
+
+  describe '#switch_player' do
+    context 'when player 1 is active' do
+      subject(:active_player_game) { described_class.new }
+      let(:player1) { double('player1') }
+      let(:player2) { double('player2') }
+
+      before do
+        allow(active_player_game).to receive(:board_size).and_return(3)
+        allow(active_player_game).to receive(:create_player).and_return(player1, player2)
+      end
+
+      it 'switches player 1 to player 2' do
+        expected = player2
+
+        active_player_game.setup_game
+        actual = active_player_game.switch_player
+
+        expect(actual).to be(expected)
+      end
+
+      it 'switches player 2 to player 1' do
+        expected = player1
+
+        active_player_game.setup_game
+        active_player_game.switch_player
+        actual = active_player_game.switch_player
+
+        expect(actual).to be(expected)
+      end
+    end
+
+    # context 'when player 2 is active' do
+    # end
   end
 end
