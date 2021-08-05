@@ -34,7 +34,7 @@ class TicTacToe
   end
 
   def create_player(marker, color_code = nil)
-    player_type = ask_player_type
+    player_type = ask_player_type(marker)
 
     case player_type
     when '1'
@@ -48,7 +48,7 @@ class TicTacToe
     @current_player = @current_player == @player1 ? @player2 : @player1
   end
 
-  def ask_player_type
+  def ask_player_type(marker)
     player_type = nil
 
     until %w[1 2].include?(player_type)
@@ -59,16 +59,6 @@ class TicTacToe
     end
 
     player_type
-  end
-
-  private
-  def setup_game
-    @player1 = create_player('X', '31m')
-    @player2 = create_player('O', '36m')
-    @current_player = @player1
-    @winner = nil
-
-    @board = Gameboard.new(board_size)
   end
 
   def board_size
@@ -86,6 +76,19 @@ class TicTacToe
 
     size
   end
+
+  private
+  
+  def setup_game
+    @player1 = create_player('X', '31m')
+    @player2 = create_player('O', '36m')
+    @current_player = @player1
+    @winner = nil
+
+    @board = Gameboard.new(board_size)
+  end
+
+
 
   def play_next_turn(current_player)
     slot = 0
