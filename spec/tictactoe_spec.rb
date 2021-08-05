@@ -61,6 +61,76 @@ describe TicTacToe do
     end
   end
 
+  #loop script
+  describe '#board_size' do
+    subject(:board_size_game) { described_class.new }
+
+    before do
+      allow(board_size_game).to receive(:puts)
+      allow(board_size_game).to receive(:print)
+    end
+
+    context 'when input in 3-15 range' do
+      context 'when input is 3' do
+        before do
+          valid_size = '3'
+          allow(board_size_game).to receive(:gets).and_return(valid_size)
+        end
+
+        it 'exits the prompt loop' do
+          expect(board_size_game).to receive(:print).once
+          board_size_game.board_size
+        end
+
+        it 'returns 3' do
+          expected = 3
+          actual = board_size_game.board_size
+          expect(expected).to eq(actual)
+        end
+      end
+
+      context 'when input is 15' do
+        before do
+          valid_size = '15'
+          allow(board_size_game).to receive(:gets).and_return(valid_size)
+        end
+
+        it 'exits the prompt loop' do
+          expect(board_size_game).to receive(:print).once
+          board_size_game.board_size
+        end
+
+        it 'returns 15' do
+          expected = 15
+          actual = board_size_game.board_size
+          expect(expected).to eq(actual)
+        end
+      end
+    end
+
+    context 'when input is invalid' do
+      context 'when input out of range' do
+        xit 'continues the input loop when input is 2' do
+        end
+      end
+    end
+
+    context 'when input is blank' do
+      before do
+        input = ''
+        allow(board_size_game).to receive(:gets).and_return(input)
+        # allow(board_size_game).to receive(:puts)
+        # allow(board_size_game).to receive(:print)
+      end
+
+      it 'returns default value of 3' do
+        expected = 3
+        actual = board_size_game.board_size
+        expect(expected).to eq(actual)
+      end
+    end
+  end
+
   describe '#create_player' do
     subject(:player_select_game) { described_class.new }
 
