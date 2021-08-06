@@ -58,7 +58,8 @@ class Gameboard
   def in_range(cell)
     return nil if cell.nil?
 
-    cell.between?(0, (@board.size - 1))
+    index = cell_to_index(cell)
+    index.between?(0, (@board.size - 1))
   end
 
   def cell_to_index(cell)
