@@ -166,6 +166,46 @@ describe TicTacToe do
     end
   end
 
+  describe '#play_game' do
+    subject(:winning_game) { described_class.new }
+    let(:player1) { double('player1', marker: 'X') }
+    let(:player2) { double('player2', marker: 'O') }
+
+    before do
+      allow(winning_game).to receive(:switch_player)
+      allow(winning_game).to receive(:create_player).and_return(player1, player2)
+      allow(winning_game).to receive(:board_size).and_return(3)
+
+      allow($stdout).to receive(:puts) # prevents instance vars from printing to console
+      allow($stdout).to receive(:print) # prevents instance vars from printing to console
+    end
+
+    context 'when the board has a winner' do
+      before do
+        allow(winning_game).to receive(:winner?).and_return(false, true)
+      end
+
+      it 'ends the game' do
+        expect(winning_game).to receive(:end_game)
+        winning_game.setup_game
+        winning_game.play_game
+      end
+    end
+
+    context 'when the board is full' do
+      before do
+        allow(winning_game).to receive(:winner?).and_return(false)
+        allow(winning_game).to receive(:full?).and_return(false, true)
+      end
+
+      it 'ends the game' do
+        expect(winning_game).to receive(:end_game)
+        winning_game.setup_game
+        winning_game.play_game
+      end
+    end
+  end
+
   describe '#switch_player' do
     context 'when player 1 is active' do
       subject(:active_player_game) { described_class.new }
@@ -196,8 +236,5 @@ describe TicTacToe do
         expect(actual).to be(expected)
       end
     end
-
-    # context 'when player 2 is active' do
-    # end
   end
 end
