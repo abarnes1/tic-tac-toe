@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'tictactoe'
-require_relative 'gameboard'
+require_relative 'lib/tictactoe'
+require_relative 'lib/gameboard'
 
 $stdout.sync = true # allows use of print keep prompt and input on same line
 

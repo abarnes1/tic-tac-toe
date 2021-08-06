@@ -21,6 +21,8 @@ class Gameboard
   end
 
   def space_free?(cell)
+    return false unless in_range(cell)
+
     index = cell_to_index(cell)
     @board[index].nil?
   end
@@ -52,6 +54,12 @@ class Gameboard
   end
 
   private
+
+  def in_range(cell)
+    return nil if cell.nil?
+
+    cell.between?(0, (@board.size - 1))
+  end
 
   def cell_to_index(cell)
     cell - 1

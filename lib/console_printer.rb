@@ -10,7 +10,7 @@ module ConsolePrinter
   def print
     print_values =
       @board.map.with_index do |marker, index|
-        contents = marker.nil? ? index.to_s : marker
+        contents = marker.nil? ? (index + 1).to_s : marker
         format_space(contents)
       end
 
@@ -36,10 +36,6 @@ module ConsolePrinter
 
     ' ' * left_pad + contents.to_s + ' ' * right_pad
   end
-
-  # def with_color(contents, color)
-  #   color.nil? ? contents : "\e[#{color}#{contents}\e[0m"
-  # end
 
   def as_grid(contents_array)
     grid = ''

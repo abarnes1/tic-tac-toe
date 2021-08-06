@@ -18,11 +18,12 @@ class TicTacToe
   def play_game
     setup_game
 
-    until @board.full?
+    until full?
+
       @board.print
       play_next_turn(@current_player)
 
-      if @board.winner?(@current_player.marker)
+      if winner?(@current_player.marker)
         @winner = @current_player
         break
       end
@@ -86,22 +87,30 @@ class TicTacToe
     @board = Gameboard.new(board_size)
   end
 
+  def winner?(marker)
+    @board.winner?(marker)
+  end
+
+  def full?
+    @board.full?
+  end
+
   private
 
   def play_next_turn(current_player)
-    slot = 0
+    space = -1
 
     if current_player.instance_of?(HumanPlayer)
-      until @board.slot_free?(slot)
-        print "Choose a square for #{current_player.marker}: "
-        slot = gets.chomp.to_i
+      until @board.space_free?(space)
+        print "Choose a space for #{current_player.marker}: "
+        space = gets.chomp.to_i
       end
     elsif current_player.instance_of?(ComputerPlayer)
-      slot = @board.open_slots.sample
-      puts "Computer (#{current_player.marker}) chooses slot ##{slot}"
+      space = @board.open_spaces.sample
+      puts "Computer (#{current_player.marker}) chooses space ##{space}"
     end
 
-    @board.mark(current_player.marker, slot, current_player.color_code)
+    @board.mark(space, current_player.marker)
     puts ''
   end
 
